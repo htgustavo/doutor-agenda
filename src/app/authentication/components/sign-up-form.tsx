@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { Loader2 } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
-import { toats } from "sonner"
+import { toast } from "sonner"
 import { z } from "zod"
 
 import { Button } from "@/components/ui/button"
@@ -57,11 +57,11 @@ const SignUpForm = () => {
       },
       onError: (ctx) => {
         if (ctx.error.code === "USER_ALREADY_EXISTS") {
-          toats.error("E-mail já cadastrado.")
+          toast.error("E-mail já cadastrado.")
           return
         }
 
-        toats.error("Erro ao criar conta.")
+        toast.error("Erro ao criar conta.")
       }
     })
   }

@@ -1,0 +1,44 @@
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
+
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle
+} from "@/components/ui/dialog";
+import { auth } from "@/lib/auth";
+
+import ClinicForm from "./components/form";
+
+const ClinicFormPage = async () => {
+
+  const session = await auth.api.getSession({
+    headers: await headers()
+  })
+
+  if (!session?.user) {
+    redirect('/authentication')
+  }
+
+  return ( 
+    <div>
+      <Dialog open>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Adicionar clinica</DialogTitle>
+            <DialogDescription>
+              Adicione uma clinica para continuar
+            </DialogDescription>
+          </DialogHeader>
+
+          <ClinicForm />
+
+        </DialogContent>
+      </Dialog>
+    </div>
+  );
+}
+ 
+export default ClinicFormPage;

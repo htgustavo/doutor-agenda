@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/dialog";
 import { auth } from "@/lib/auth";
 
-import ClinicForm from "./components/form";
+import ClinicForm from "./_components/form";
 
 const ClinicFormPage = async () => {
 

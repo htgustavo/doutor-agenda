@@ -32,7 +32,7 @@ export const auth = betterAuth({
       return {
         user: {
           ...user, 
-          clinic: clinic.clinicId ? { 
+          clinic: clinic?.clinicId ? { 
             id: clinic?.clinicId,
             name: clinic?.clinic.name
           } 

@@ -19,8 +19,6 @@ export const createClinic = async(name: string) => {
 
   const [clinic] = await db.insert(clinicsTable).values({ 
       name,
-      address: "",
-      phone:"" 
   }).returning();
 
   await db.insert(usersToClinicsTable).values({

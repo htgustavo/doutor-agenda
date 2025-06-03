@@ -46,6 +46,14 @@ const DoctorsPage = async () => {
         </PageActions>
       </PageHeader>
       <PageContent>
+        {doctors.length === 0 && (
+          <div className="flex flex-col items-center justify-center gap-y-4 border rounded-xl p-6">
+            <p className="text-sm text-muted-foreground">
+              Nenhum médico encontrado
+            </p>
+            <AddDoctorButton />
+          </div>
+        )}
         <div className="grid lg:grid-cols-3 gap-6">
           { doctors.map(doctor =>(
             <DoctorCard

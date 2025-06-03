@@ -1,11 +1,11 @@
 "use client"
 
-import { CalendarDays, Gem, LayoutDashboard, LogOut, Stethoscope, UsersRound } from "lucide-react"
+import { CalendarDays, EllipsisVertical, Gem, LayoutDashboard, LogOut, Stethoscope, UsersRound } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -113,19 +113,24 @@ export function AppSidebar() {
           <SidebarMenuItem>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <SidebarMenuButton size="lg">
-                  <Avatar>
-                    <AvatarImage src="https://github.com/shadcn.png" />
-                    <AvatarFallback>CN</AvatarFallback>
-                  </Avatar>
-                  <div>
-                    <p className="text-sm">
-                      {session.data?.user.clinic?.name}
-                    </p>
-                    <p className="text-sm text-muted-foreground">
-                      {session.data?.user.email}
-                    </p>
+                <SidebarMenuButton size="lg" className="justify-between">
+                  <div className="flex items-center gap-x-2">
+                    <Avatar>
+                      <AvatarFallback className="bg-primary text-primary-foreground">
+                        {session.data?.user.clinic?.name.charAt(0).toUpperCase()}
+                        {session.data?.user.clinic?.name.charAt(1).toUpperCase()}
+                      </AvatarFallback>
+                    </Avatar>
+                   <div>
+                      <p className="text-sm">
+                        {session.data?.user.clinic?.name}
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        {session.data?.user.email}
+                      </p>
+                    </div>
                   </div>
+                  <EllipsisVertical />
                 </SidebarMenuButton>
               </DropdownMenuTrigger>
               <DropdownMenuContent>

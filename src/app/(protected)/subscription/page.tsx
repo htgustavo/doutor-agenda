@@ -19,7 +19,7 @@ const SubscriptionPage = async () => {
     headers: await headers(),
   });
   if (!session) {
-    redirect("/login");
+    redirect("/authentication");
   }
   if (!session.user.clinic) {
     redirect("/clinic-form");

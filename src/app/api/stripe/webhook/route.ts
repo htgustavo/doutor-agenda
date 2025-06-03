@@ -35,9 +35,12 @@ export const POST = async (req: Request) => {
         throw new Error("Invoice ID is required");
       }    
 
-      const { subscription, customer, subscription_details } = event.data.object as unknown as {
-        subscription: string;
+      const { customer } = event.data.object as unknown as {
         customer: string;
+      }
+
+      const { subscription, subscription_details } = event.data.object.parent as unknown as {
+        subscription: string;
         subscription_details: {
           metadata: {
             userId: string;

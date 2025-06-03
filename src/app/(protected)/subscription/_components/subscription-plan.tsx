@@ -2,8 +2,8 @@
 
 import { loadStripe } from "@stripe/stripe-js";
 import { Badge, CheckCircle2, Loader2 } from "lucide-react";
-import { useAction } from "next-safe-action/hooks";
 import { useRouter } from "next/navigation";
+import { useAction } from "next-safe-action/hooks";
 
 import { createStripeCheckout } from "@/actions/create-stripe-checkout";
 import { Button } from "@/components/ui/button";

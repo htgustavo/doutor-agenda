@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
-import { isRedirectError } from "next/dist/client/components/redirect-error";
+import { useAction } from "next-safe-action/hooks";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -26,15 +26,14 @@ const ClinicForm = () => {
     },
   })
 
-  async function onSubmit(values: z.infer<typeof clinicSchema>) {
-    try {
-      await createClinic(values.name)
-    } catch (error) {
-      if (isRedirectError(error)) {
-        return;
-      }
-      toast.error('Erro ao criar clínica.')
+  const { execute, isExecuting } = useAction(createClinic, {
+    onError: ({ error }) => {
+      toast.error(error.serverError || 'Erro ao criar clínica.')
     }
+  })
+
+  async function onSubmit(values: z.infer<typeof clinicSchema>) {
+    execute(values)
   }
 
   return (
@@ -49,7 +48,7 @@ const ClinicForm = () => {
               <FormItem>
                 <FormLabel>Nome</FormLabel>
                 <FormControl>
-                  <Input placeholder="Digite seu e-mail" {...field} />
+                  <Input placeholder="Digite o nome da clínica" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -59,9 +58,9 @@ const ClinicForm = () => {
           <DialogFooter>
             <Button 
               type="submit" 
-              disabled={form.formState.isSubmitting}
+              disabled={isExecuting}
             >
-              {form.formState.isSubmitting && (
+              {isExecuting && (
                 <Loader2 className="mr-2 w-4 h-4 animate-spin" />
               )}
               Criar clínica

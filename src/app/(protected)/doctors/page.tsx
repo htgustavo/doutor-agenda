@@ -1,10 +1,10 @@
 import { eq } from "drizzle-orm";
 import { headers } from "next/headers";
-import { redirect } from "next/navigation";
 
 import { PageActions, PageContainer, PageContent, PageDescription, PageHeader, PageHeaderContent, PageTitle } from "@/components/ui/page-container";
 import { db } from "@/db";
 import { doctorsTable } from "@/db/schema";
+import { WithAuthentication } from "@/hocs/with-authentication";
 import { auth } from "@/lib/auth";
 
 import AddDoctorButton from "./_components/add-doctor-button";
@@ -16,54 +16,46 @@ const DoctorsPage = async () => {
     headers: await headers()
   })
 
-  if(!session?.user) {
-    redirect('/authentication')
-  }
-
-  if(!session?.user.clinic) {
-    redirect('/clinic-form')
-  }
-
-  if(!session.user.plan) {
-    redirect("/new-subscription");
-  }
 
   const doctors = await db.query.doctorsTable.findMany({
-    where: eq(doctorsTable.clinicId, session.user.clinic.id)
+    where: eq(doctorsTable.clinicId, session!.user.clinic!.id)
   })
 
   return (
-    <PageContainer>
-      <PageHeader>
-        <PageHeaderContent>
-          <PageTitle>Médicos</PageTitle>
-          <PageDescription>
-            Gerencia os médicos da sua clínica
-          </PageDescription>
-        </PageHeaderContent>
-        <PageActions>
-          <AddDoctorButton />
-        </PageActions>
-      </PageHeader>
-      <PageContent>
-        {doctors.length === 0 && (
-          <div className="flex flex-col items-center justify-center gap-y-4 border rounded-xl p-6">
-            <p className="text-sm text-muted-foreground">
-              Nenhum médico encontrado
-            </p>
-            <AddDoctorButton />
-          </div>
-        )}
-        <div className="grid lg:grid-cols-3 gap-6">
-          { doctors.map(doctor =>(
-            <DoctorCard
-              key={doctor.id}
-              doctor={doctor}
-            />
-          ))}
-        </div>
-      </PageContent>
-    </PageContainer>
+    <WithAuthentication mustHaveClinic mustHavePlan>
+      <PageContainer>
+            <PageHeader>
+              <PageHeaderContent>
+                <PageTitle>Médicos</PageTitle>
+                <PageDescription>
+                  Gerencia os médicos da sua clínica
+                </PageDescription>
+              </PageHeaderContent>
+              <PageActions>
+                <AddDoctorButton />
+              </PageActions>
+            </PageHeader>
+            <PageContent>
+              {doctors.length === 0 && (
+                <div className="flex flex-col items-center justify-center gap-y-4 border rounded-xl p-6">
+                  <p className="text-sm text-muted-foreground">
+                    Nenhum médico encontrado
+                  </p>
+                  <AddDoctorButton />
+                </div>
+              )}
+              <div className="grid lg:grid-cols-3 gap-6">
+                { doctors.map(doctor =>(
+                  <DoctorCard
+                    key={doctor.id}
+                    doctor={doctor}
+                  />
+                ))}
+              </div>
+            </PageContent>
+      </PageContainer>
+    </WithAuthentication>    
+    
   );
 }
  

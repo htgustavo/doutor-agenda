@@ -41,4 +41,7 @@ React/Next.js
 - Ao criar páginas, use os componentes dentro do @page-container.tsx para manter os padrões de margin, padding e spacing nas páginas.
 Exemplo: @page.tsx/doctors/page.tsx)
 - Sempre use a biblioteca "react-number-format" ao criar mascaras para inputs.
-
+- Ao criar tabelas para listar dados, use o arquivo [page.tsx](mdc:src/app/(protected)/appointments/page.tsx) como referencia. Sempre use o componente [data-table.tsx](mdc:src/components/ui/data-table.tsx) para isso. Sempre adicione ordenação a todas as colunas da tabela.
+- Sempre use React Query para faer data fatching em Client Components. Veja um exemplo em [add-appointment-form.tsx](mdc:src/app/(protected)/appointments/_components/add-appointment-form.tsx).
+Quando necessário interagir com recursos do servidor, crie uma Server Action e chame usando React Query.
+- Sempre que for preciso interagir com o bando de dados, veja o arquivo [schema.ts](mdc:src/db/schema.ts).

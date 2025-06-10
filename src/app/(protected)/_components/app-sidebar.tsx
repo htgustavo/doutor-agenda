@@ -1,6 +1,6 @@
 "use client"
 
-import { CalendarDays, EllipsisVertical, Gem, LayoutDashboard, LogOut, Stethoscope, UsersRound } from "lucide-react"
+import { CalendarDays, EllipsisVertical, Gem, History, LayoutDashboard, LogOut, Stethoscope, UsersRound } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
@@ -47,6 +47,11 @@ const items = [
     title: "Pacientes",
     url: "/patients",
     icon: UsersRound,
+  },
+  {
+    title: "Histórico de Médicos",
+    url: "/doctor-history",
+    icon: History,
   }
 ]
  

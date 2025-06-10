@@ -6,7 +6,7 @@ export function middleware(request: NextRequest) {
   const sessionCookie = getSessionCookie(request);
  
 	if (!sessionCookie) {
-		return NextResponse.redirect(new URL("/authentication", request.url));
+		//return NextResponse.redirect(new URL("/authentication", request.url));
 	}
  
 	return NextResponse.next();
@@ -14,12 +14,12 @@ export function middleware(request: NextRequest) {
  
 export const config = {
   matcher: [
-    '/dashboard/:path*',
-    '/appointments/:path*',
-    '/patients/:path*',
-    '/doctors/:path*',
-    '/subscription/:path*',
-    '/clinic-form/:path*',
+    '/dashboard',
+    '/appointments',
+    '/patients',
+    '/doctors',
+    '/subscription',
+    '/clinic-form',
     '/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)',
   ],
 }

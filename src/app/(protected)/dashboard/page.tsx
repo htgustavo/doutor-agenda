@@ -42,6 +42,12 @@ const DashboardPage = async ({ searchParams }: DashboardPageProps) => {
       `/dashboard?from=${dayjs().format("YYYY-MM-DD")}&to=${dayjs().add(1, "month").format("YYYY-MM-DD")}`,
     );
   }
+
+  if (!session?.user?.clinic?.id) {
+    redirect("/new-subscription");
+  }
+
+  
   const {
     totalRevenue,
     totalAppointments,
